@@ -1,12 +1,14 @@
 import { LabelFormProps } from "../../ui/LabelForm/LabelForm.type";
 
-export const SignInFormContent: LabelFormProps[] = [
+type SignInFormContentType = Omit<LabelFormProps, "value" | "onChange">;
+
+export const SignInFormContent: SignInFormContentType[] = [
   {
-    htmlFor: "username",
-    labelTitle: "Username",
-    type: "text",
-    id: "username",
-    name: "username",
+    htmlFor: "email",
+    labelTitle: "email",
+    type: "email",
+    id: "email",
+    name: "email",
   },
   {
     htmlFor: "password",
@@ -14,12 +16,5 @@ export const SignInFormContent: LabelFormProps[] = [
     type: "password",
     id: "password",
     name: "password",
-  },
-  {
-    htmlFor: "rememberMe",
-    labelTitle: "Remember me",
-    type: "checkbox",
-    id: "rememberMe",
-    name: "rememberMe",
   },
 ];

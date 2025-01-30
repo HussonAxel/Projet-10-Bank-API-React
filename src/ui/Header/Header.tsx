@@ -1,12 +1,9 @@
-import { Link, useLocation } from '@tanstack/react-router'
-import logoHeader from "../../assets/static/logo/argentBankLogo.png"
+import { Link, useLocation } from "@tanstack/react-router";
+import logoHeader from "../../assets/static/logo/argentBankLogo.png";
 import { FaUserCircle } from "react-icons/fa";
 
-
-
 const Header = () => {
-    const location = useLocation()
-    console.log(location)
+  const location = useLocation();
   return (
     <div className="flex flex-row justify-between items-center py-1 px-5">
       <Link to="/" className="text-green-700">
@@ -19,10 +16,7 @@ const Header = () => {
       <div className="flex flex-row items-center text-[#2c3e50] gap-2">
         <FaUserCircle />
         {location.pathname === "/sign-in" ? (
-          <Link
-            to="/"
-            className="font-bold mr-2 hover:underline"
-          >
+          <Link to="/" className="font-bold mr-2 hover:underline">
             Sign-out
           </Link>
         ) : (
@@ -36,8 +30,6 @@ const Header = () => {
       </div>
     </div>
   );
-}
+};
 
-
-
-export default Header
+export default Header;

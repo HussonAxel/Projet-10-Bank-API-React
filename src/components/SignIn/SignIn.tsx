@@ -2,33 +2,98 @@ import LabelForm from "../../ui/LabelForm/LabelForm";
 import { SignInFormContent } from "./SignInFormContent";
 import { FaUserCircle } from "react-icons/fa";
 import ButtonPrimary from "../../ui/Buttons/ButtonPrimary";
-
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser, UserState, LoginResponse } from "../../Store/UserSlice";
+import { useState } from "react";
+import RememberMe from "./RememberMe";
+import { useNavigate } from "@tanstack/react-router";
+import { AppDispatch } from "../../Store";
 
 const SignIn = () => {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const navigate = useNavigate();
+
+  const { loading } = useSelector((state: UserState) => state);
+  const dispatch = useDispatch<AppDispatch>();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    rememberMe: false,
+  });
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleRememberMeChange = (checked: boolean) => {
+    setFormData((prev) => ({
+      ...prev,
+      rememberMe: checked,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setErrorMessage(null);
+    try {
+      const result = await dispatch(loginUser(formData));
+      console.log(typeof result);
+
+      if (result.meta.requestStatus === "fulfilled" && result.payload) {
+        setFormData({
+          email: "",
+          password: "",
+          rememberMe: false,
+        });
+        navigate({ to: "/user" });
+        const response = result.payload as LoginResponse;
+        console.log(response.data.body.token);
+      } else {
+        setErrorMessage(
+          result.payload && (result.payload as LoginResponse).data.message
+            ? (result.payload as LoginResponse).data.message
+            : "An unknown error occurred."
+        );
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setErrorMessage("An error occurred while logging in.");
+    }
+    console.log(formData);
   };
 
   return (
-      <div className="bg-white w-full max-w-[300px] mt-12 p-8 max-h-[365px]">
-        <div className="w-full items-center flex flex-col">
-          <FaUserCircle />
-          <h1 className="my-5 text-2xl font-bold text-[#2c3e50]">Sign In</h1>
-        </div>
-
-        <form onSubmit={handleSubmit}>
-          {SignInFormContent.map((label) => (
-            <LabelForm
-              htmlFor={label.htmlFor}
-              labelTitle={label.labelTitle}
-              type={label.type}
-              id={label.id}
-              name={label.name}
-            />
-          ))}
-          <ButtonPrimary ButtonPrimaryContent="Sign In" />
-        </form>
+    <div className="bg-white w-full max-w-[300px] mt-12 p-8 max-h-[365px]">
+      <div className="w-full items-center flex flex-col">
+        <FaUserCircle />
+        <h1 className="my-5 text-2xl font-bold text-[#2c3e50]">Sign In</h1>
       </div>
+      <form onSubmit={handleSubmit}>
+        {SignInFormContent.map((field) => (
+          <LabelForm
+            key={field.id}
+            {...field}
+            value={formData[field.name as keyof typeof formData]}
+            onChange={handleChange}
+          />
+        ))}
+        <RememberMe
+          checked={formData.rememberMe}
+          onChange={handleRememberMeChange}
+        />
+        <ButtonPrimary
+          ButtonPrimaryContent={loading ? "Signing in..." : "Sign-in"}
+        />
+
+        {errorMessage && (
+          <div className="text-red-500 text-sm text-center">{errorMessage}</div>
+        )}
+      </form>
+    </div>
   );
 };
 

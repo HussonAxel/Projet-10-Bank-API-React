@@ -5,12 +5,26 @@ import { AvailableBalanceContent } from "../components/AvailableBalance/Availabl
 import TransactionPannel from "../ui/TransactionPannel/TransactionPannel";
 import Transactions from "../components/Transactions/Transactions";
 import { TransactionsContent } from "../components/Transactions/TransactionsContent";
+import { useEffect } from "react";
+import { useNavigate } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/transactions")({
   component: Index,
 });
 
 function Index() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isLoggedIn = false;
+    if (!isLoggedIn) {
+      navigate({
+        to: "/sign-in",
+        replace: true,
+      });
+    }
+  }, [navigate]);
+
   return (
     <Section className="bg-[#dfe6ed] flex flex-col">
       <TransactionPannel className="w-full text-center max-h-[180px] border-2 border-[#c3cfd9] content-center">

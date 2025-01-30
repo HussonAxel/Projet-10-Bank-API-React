@@ -1,6 +1,14 @@
 import { LabelFormProps } from "./LabelForm.type";
 
-const LabelForm: React.FC<LabelFormProps> = ({ htmlFor,labelTitle, type, id, name }) => {
+const LabelForm: React.FC<LabelFormProps> = ({
+  htmlFor,
+  labelTitle,
+  type,
+  id,
+  name,
+  value = "",
+  onChange,
+}) => {
   return (
     <div
       className={`flex ${htmlFor === "rememberMe" ? "flex-row-reverse justify-end" : "flex-col"} mb-4`}
@@ -10,7 +18,9 @@ const LabelForm: React.FC<LabelFormProps> = ({ htmlFor,labelTitle, type, id, nam
         type={type}
         id={id}
         name={name}
-        required
+        value={value as string}
+        onChange={onChange}
+        required={htmlFor !== "rememberMe"}
         className="border-2 p-2"
       />
     </div>
