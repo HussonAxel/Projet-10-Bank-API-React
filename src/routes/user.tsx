@@ -4,8 +4,8 @@ import TransactionPannel from "../ui/TransactionPannel/TransactionPannel";
 import AvailableBalance from "../components/AvailableBalance/AvailableBalance";
 import { AvailableBalanceContent } from "../components/AvailableBalance/AvailableBalanceContent";
 import ButtonPrimary from "../ui/Buttons/ButtonPrimary";
-import Greetings from "../components/Greetings/Greetings";
 import EditDataName from "../utils/userDataManager/EditDataName";
+import Greetings from "../components/Greetings/Greetings";
 
 export const Route = createFileRoute("/user")({
   component: Index,
@@ -14,9 +14,10 @@ export const Route = createFileRoute("/user")({
 function Index() {
   const { editDataName } = EditDataName();
 
+
   return (
     <Section className="flex-col">
-      <Greetings firstName="Tony " lastName="Jarvis!" />
+      <Greetings  />
       <ButtonPrimary
         buttonId="editButton"
         ButtonPrimaryContent="Edit"
@@ -41,4 +42,4 @@ function Index() {
       ))}
     </Section>
   );
-}
+};

@@ -1,4 +1,6 @@
 let originalDataName = ""; // Variable to store the original data name
+let originalFirstName = ""; // Variable to store the original first name
+let originalLastName = ""; // Variable to store the original last name
 
 const EditDataName = () => {
   const getElements = () => {
@@ -7,16 +9,31 @@ const EditDataName = () => {
       dataEdit: document.getElementById("dataEdit"),
       editButton: document.getElementById("editButton"),
       dataManage: document.getElementById("dataManage"),
+      firstNameInput: document.querySelector<HTMLInputElement>(
+        "#dataEdit input[placeholder='Edit First Name']"
+      ),
+      lastNameInput: document.querySelector<HTMLInputElement>(
+        "#dataEdit input[placeholder='Edit Last Name']"
+      ),
     };
   };
 
   const editDataName = () => {
-    const { dataName, dataEdit, editButton, dataManage } = getElements();
+    const {
+      dataName,
+      dataEdit,
+      editButton,
+      dataManage,
+      firstNameInput,
+      lastNameInput,
+    } = getElements();
     const isDataManageVisible =
       dataManage?.getAttribute("aria-hidden") === "false";
 
-    // Store the original data name when editing starts
+    // Store the original data name and input values when editing starts
     originalDataName = dataName?.textContent || "";
+    originalFirstName = firstNameInput?.value || "";
+    originalLastName = lastNameInput?.value || "";
 
     // Hide the editButton when editing starts
     editButton?.classList.add("hidden");
@@ -34,8 +51,21 @@ const EditDataName = () => {
   };
 
   const saveDataName = () => {
-    const { dataName, dataEdit, editButton, dataManage } = getElements();
+    const {
+      dataName,
+      dataEdit,
+      editButton,
+      dataManage,
+      firstNameInput,
+      lastNameInput,
+    } = getElements();
     console.log(dataName, dataEdit, editButton, dataManage);
+
+    // Update dataName with the values from the input fields
+    if (dataName && firstNameInput && lastNameInput) {
+      dataName.innerHTML = `<span id="firstName">${firstNameInput.value}</span> <span id="lastName">${lastNameInput.value}</span>`;
+    }
+
     dataManage?.classList.add("hidden");
     dataEdit?.classList.add("hidden");
     dataName?.classList.remove("hidden");
@@ -43,11 +73,24 @@ const EditDataName = () => {
   };
 
   const cancelDataName = () => {
-    const { dataName, dataEdit, editButton, dataManage } = getElements();
+    const {
+      dataName,
+      dataEdit,
+      editButton,
+      dataManage,
+      firstNameInput,
+      lastNameInput,
+    } = getElements();
     console.log(dataName, dataEdit, editButton, dataManage);
 
     if (dataName) {
       dataName.textContent = originalDataName;
+    }
+    if (firstNameInput) {
+      firstNameInput.value = originalFirstName;
+    }
+    if (lastNameInput) {
+      lastNameInput.value = originalLastName;
     }
 
     dataManage?.classList.add("hidden");

@@ -1,12 +1,27 @@
-import { GreetingsProps } from "./Greetings.type";
 import ButtonPrimary from "../../ui/Buttons/ButtonPrimary";
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import EditDataName from "../../utils/userDataManager/EditDataName";
+import  fetchUserProfile  from "../../utils/fetchUserProfile";
 
-const Greetings: React.FC<GreetingsProps> = ({ firstName, lastName }) => {
-  const [firstNameInput, setFirstNameInput] = useState(firstName);
-  const [lastNameInput, setLastNameInput] = useState(lastName);
+
+const Greetings = () => {
+
   const { saveDataName, cancelDataName } = EditDataName();
+
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+
+    useEffect(() => {
+      const getUserProfile = async () => {
+        const data = await fetchUserProfile();
+        if (data) {
+          setFirstName(data.body.firstName);
+          setLastName(data.body.lastName);
+        }
+      };
+
+      getUserProfile();
+    }, []);
 
   return (
     <div className="text-white mt-8 text-center text-[32px] font-bold line-height-relaxed">
@@ -14,22 +29,22 @@ const Greetings: React.FC<GreetingsProps> = ({ firstName, lastName }) => {
         Welcome back
         <br />
         <div id="dataName">
-          <span id="firstName">{firstNameInput}</span>
-          <span id="lastName">{lastNameInput}</span>
+          <span id="firstName">{firstName}</span>{" "}
+          <span id="lastName">{lastName}</span>
         </div>
       </h1>
       <div className="hidden justify-center gap-12" id="dataEdit">
         <input
           type="text"
-          value={firstNameInput}
-          onChange={(e) => setFirstNameInput(e.target.value)}
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
           placeholder="Edit First Name"
           className="mt-4 border-gray-500 text-gray-500 border-2 py-2"
         />
         <input
           type="text"
-          value={lastNameInput}
-          onChange={(e) => setLastNameInput(e.target.value)}
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
           placeholder="Edit Last Name"
           className="mt-4 border-gray-500 text-gray-500 border-2 py-2"
         />

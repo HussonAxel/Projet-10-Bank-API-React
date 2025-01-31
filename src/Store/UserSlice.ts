@@ -8,13 +8,11 @@ export interface LoginFormData {
 }
 
 export interface LoginResponse {
-  data: {
     body: {
       token: string;
     };
     status: number;
     message: string;
-  };
 }
 
 export interface UserState {

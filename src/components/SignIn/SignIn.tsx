@@ -8,6 +8,7 @@ import { useState } from "react";
 import RememberMe from "./RememberMe";
 import { useNavigate } from "@tanstack/react-router";
 import { AppDispatch } from "../../Store";
+import {localStorageSaver} from "../../utils/localStorageManager";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -41,7 +42,6 @@ const SignIn = () => {
     setErrorMessage(null);
     try {
       const result = await dispatch(loginUser(formData));
-      console.log(typeof result);
 
       if (result.meta.requestStatus === "fulfilled" && result.payload) {
         setFormData({
@@ -51,11 +51,14 @@ const SignIn = () => {
         });
         navigate({ to: "/user" });
         const response = result.payload as LoginResponse;
-        console.log(response.data.body.token);
+        localStorageSaver("token", response.body.token);
+        localStorageSaver("rememberMe", formData.rememberMe.toString());
+
       } else {
+
         setErrorMessage(
-          result.payload && (result.payload as LoginResponse).data.message
-            ? (result.payload as LoginResponse).data.message
+          result.payload && (result.payload as LoginResponse).message
+            ? (result.payload as LoginResponse).message
             : "An unknown error occurred."
         );
       }
@@ -63,7 +66,6 @@ const SignIn = () => {
       console.error("Login error:", error);
       setErrorMessage("An error occurred while logging in.");
     }
-    console.log(formData);
   };
 
   return (

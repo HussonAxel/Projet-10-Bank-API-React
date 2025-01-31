@@ -16,8 +16,7 @@ function Index() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const isLoggedIn = false;
-    if (!isLoggedIn) {
+    if (!localStorage.getItem("token")) {
       navigate({
         to: "/sign-in",
         replace: true,

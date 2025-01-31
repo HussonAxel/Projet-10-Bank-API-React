@@ -64,12 +64,6 @@ export default tseslint.config({
     --> Afficher les boutons pour valider et annuler
     --> Envoyer les nouvelles données à l'API
 
-## - Rendre l'affichage des noms et prénoms dynamique (Récupérer les données de l'utilisateur connecté via l'API)
-
-## - Bloquer la page de transactions sans user logged in : DONE
-
-## - Gérer les affichages d'erreurs de connexion
-
 ## - Afficher le prénom de l'utilisateur connecté au niveau du header
 
 ## - Afficher log-out au niveau du header lorsque l'utilisateur est connecté
@@ -87,23 +81,3 @@ export default tseslint.config({
     - La description de ce à quoi correspond l’endpoint (ex. : Retour de l'inventaire des animaux de compagnie)
     - Les paramètres possibles pour tenir compte des différents scénarios (ex. : itemId (facultatif) = ID de l'article spécifique à demander à la base de données d'inventaire).
     Les différentes réponses avec les codes de réponse correspondants qui ont un sens pour cet endpoint (ex. : 404 : réponse d'erreur d'article inconnu).
-
-const fetchUserProfile = async (token: string, dispatch: AppDispatch) => {
-try {
-const response = await axios.post(
-`${baseApi}/user/profile`,
-{},
-{
-headers: {
-Authorization: `Bearer ${token}`,
-},
-}
-);
-
-    const { firstName, lastName } = response.data.body;
-    dispatch(setName({ firstName, lastName }));
-
-} catch (error) {
-console.error('Failed to fetch user profile:', error);
-}
-};
