@@ -1,10 +1,9 @@
-import { Link, useLocation } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import logoHeader from "../../assets/static/logo/argentBankLogo.png";
 import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 import { localStorageClearAll } from "../../utils/localStorageManager";
 
 const Header = () => {
-  const location = useLocation();
   return (
     <div className="flex flex-row justify-between items-center py-1 px-5">
       <Link to="/" className="text-green-700">
@@ -16,7 +15,7 @@ const Header = () => {
       </Link>
       <div className="flex flex-row items-center text-[#2c3e50] gap-2">
         <FaUserCircle />
-        {location.pathname === "/sign-in" || localStorage.getItem("token") ? (
+        {localStorage.getItem("token") ? (
           <>
             <Link
               to="/user"

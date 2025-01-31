@@ -3,12 +3,14 @@ import { SignInFormContent } from "./SignInFormContent";
 import { FaUserCircle } from "react-icons/fa";
 import ButtonPrimary from "../../ui/Buttons/ButtonPrimary";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser, UserState, LoginResponse } from "../../Store/UserSlice";
+import { UserState, LoginResponse } from "../../Store/Store.type";
+import {userLogin} from "../../Store/UserStore";
 import { useState } from "react";
 import RememberMe from "./RememberMe";
 import { useNavigate } from "@tanstack/react-router";
 import { AppDispatch } from "../../Store";
 import {localStorageSaver} from "../../utils/localStorageManager";
+import { fetchUserProfileRedux } from "../../Store/UserStore";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -41,7 +43,7 @@ const SignIn = () => {
     e.preventDefault();
     setErrorMessage(null);
     try {
-      const result = await dispatch(loginUser(formData));
+      const result = await dispatch(userLogin(formData));
 
       if (result.meta.requestStatus === "fulfilled" && result.payload) {
         setFormData({
@@ -49,11 +51,11 @@ const SignIn = () => {
           password: "",
           rememberMe: false,
         });
-        navigate({ to: "/user" });
         const response = result.payload as LoginResponse;
         localStorageSaver("token", response.body.token);
+        dispatch(fetchUserProfileRedux());
         localStorageSaver("rememberMe", formData.rememberMe.toString());
-
+        navigate({ to: "/user" });
       } else {
 
         setErrorMessage(
