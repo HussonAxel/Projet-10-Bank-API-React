@@ -59,7 +59,7 @@ const EditDataName = () => {
       firstNameInput,
       lastNameInput,
     } = getElements();
-    console.log(dataName, dataEdit, editButton, dataManage);
+
 
     // Update dataName with the values from the input fields
     if (dataName && firstNameInput && lastNameInput) {
@@ -81,7 +81,6 @@ const EditDataName = () => {
       firstNameInput,
       lastNameInput,
     } = getElements();
-    console.log(dataName, dataEdit, editButton, dataManage);
 
     if (dataName) {
       dataName.textContent = originalDataName;

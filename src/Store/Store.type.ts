@@ -43,3 +43,8 @@ export interface UserProfileResponse {
   status: number;
   message: string;
 }
+
+export interface userData {
+  firstName:string,
+  lastName:string
+}

@@ -17,7 +17,6 @@ export const userLogin = createAsyncThunk<LoginResponse, LoginFormData>(
         `/user/login`,
         formData
       );
-      console.log(response.data);
       return response.data;
     } catch (error) {
       if (error instanceof Error) {
@@ -32,14 +31,13 @@ export const userLogin = createAsyncThunk<LoginResponse, LoginFormData>(
 
 export const fetchUserProfileRedux = createAsyncThunk<
   UserProfileResponse
->("user/userFetchData", async (token, { rejectWithValue }) => {
+>("user/userFetchData", async (_token, { rejectWithValue }) => {
   try {
     const token = localStorage.getItem("token");
     const response = await axios.post<LoginResponse>(`/user/profile` ,{}, {
       headers: {
         Authorization: `Bearer ${token}`,}},
     );
-    console.log(response.data);
     return response.data;
   } catch (error) {
     if (error instanceof Error) {
@@ -70,7 +68,6 @@ const fetchUserProfile = async () => {
     );
     localStorage.setItem("firstName", response.data.body.firstName);
     localStorage.setItem("lastName", response.data.body.lastName);
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching user profile:", error);

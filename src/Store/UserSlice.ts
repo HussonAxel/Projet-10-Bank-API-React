@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { LoginResponse, InitialState } from "./Store.type";
-import {fetchUserProfileRedux}  from "./UserStore";
-import {UserProfileResponse} from "./Store.type";
+import { fetchUserProfileRedux } from "./UserStore";
+import { UserProfileResponse, userData } from "./Store.type";
 import { userLogin } from "./UserStore";
+import { revertAll, updateName } from "./actions";
 
 const initialState: InitialState = {
   id: null,
@@ -19,7 +20,9 @@ const initialState: InitialState = {
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    reset: () => initialState,
+  },
   extraReducers(builder) {
     builder
       .addCase(userLogin.pending, (state) => {
@@ -29,12 +32,9 @@ const userSlice = createSlice({
       .addCase(
         userLogin.fulfilled,
         (state, { payload }: PayloadAction<LoginResponse>) => {
-          // BASE DATA FOR USER
           state.loading = false;
           state.error = null;
           state.isConnected = true;
-
-          // DYNAMIC DATA FOR USER
           state.token = payload.body.token;
         }
       )
@@ -45,13 +45,15 @@ const userSlice = createSlice({
       .addCase(
         fetchUserProfileRedux.fulfilled,
         (state, { payload }: PayloadAction<UserProfileResponse>) => {
-          state.firstName = payload.body.firstName
+          state.firstName = payload.body.firstName;
           state.lastName = payload.body.lastName;
         }
-      );
-
-
-
+      )
+      .addCase(revertAll, () => initialState)
+      .addCase(updateName, (state, { payload }: PayloadAction<userData>) => {
+        state.firstName = payload.firstName;
+        state.lastName = payload.lastName;
+      },)
   },
 });
 

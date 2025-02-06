@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        "hero-pattern": "url('assets/static/banners/bank-tree.jpeg')",
+        "hero-pattern": "url('assets/static/banners/bank-tree.webp')",
       },
     },
   },

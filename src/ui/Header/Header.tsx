@@ -1,11 +1,19 @@
 import { Link } from "@tanstack/react-router";
-import logoHeader from "../../assets/static/logo/argentBankLogo.png";
+import logoHeader from "../../assets/static/logo/argentBankLogo.webp";
 import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
-import { localStorageClearAll } from "../../utils/localStorageManager";
+import { useSelector, useDispatch } from "react-redux";
+import { InitialState } from "../../Store/Store.type";
+import { revertAll } from "../../Store/actions";
+
+
 
 const Header = () => {
+  const token = useSelector((state: InitialState) => state.token);
+  const firstName = useSelector((state: InitialState) => state.firstName);
+  const dispatch = useDispatch();
+
   return (
-    <div className="flex flex-row justify-between items-center py-1 px-5">
+    <div className="flex flex-row justify-between items-center py-1 px-5 h-[63px]">
       <Link to="/" className="text-green-700">
         <img
           src={logoHeader}
@@ -14,20 +22,22 @@ const Header = () => {
         />
       </Link>
       <div className="flex flex-row items-center text-[#2c3e50] gap-2">
-        <FaUserCircle />
-        {localStorage.getItem("token") ? (
+        <Link to="/user" className="font-bold hover:underline">
+          <FaUserCircle />
+        </Link>
+        {token ? (
           <>
             <Link
               to="/user"
-              className="font-bold text-[#2c3e50]hover:underline"
+              className="font-bold text-[#2c3e50] hover:underline"
             >
-              {localStorage.getItem("firstName")}
+              {firstName}
             </Link>
             <FaSignOutAlt />
             <Link
               to="/"
               className="font-bold mr-2 hover:underline"
-              onClick={localStorageClearAll}
+              onClick={() => dispatch(revertAll())}
             >
               Sign-out
             </Link>
@@ -35,7 +45,7 @@ const Header = () => {
         ) : (
           <Link
             to="/sign-in"
-            className="font-bold text-[#2c3e50]hover:underline"
+            className="font-bold text-[#2c3e50] hover:underline"
           >
             Sign In
           </Link>

@@ -9,7 +9,6 @@ import { useState } from "react";
 import RememberMe from "./RememberMe";
 import { useNavigate } from "@tanstack/react-router";
 import { AppDispatch } from "../../Store";
-import {localStorageSaver} from "../../utils/localStorageManager";
 import { fetchUserProfileRedux } from "../../Store/UserStore";
 
 const SignIn = () => {
@@ -51,10 +50,7 @@ const SignIn = () => {
           password: "",
           rememberMe: false,
         });
-        const response = result.payload as LoginResponse;
-        localStorageSaver("token", response.body.token);
         dispatch(fetchUserProfileRedux());
-        localStorageSaver("rememberMe", formData.rememberMe.toString());
         navigate({ to: "/user" });
       } else {
 

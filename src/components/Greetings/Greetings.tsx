@@ -1,13 +1,15 @@
 import ButtonPrimary from "../../ui/Buttons/ButtonPrimary";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import EditDataName from "../../utils/userDataManager/EditDataName";
 import { InitialState } from "../../Store/Store.type";
+import { updateName } from "../../Store/actions";
 
 
 const Greetings = () => {
 
-  const { saveDataName, cancelDataName } = EditDataName();
+  const {cancelDataName } = EditDataName();
+  const dispatch = useDispatch();
 
     const [firstNameEdit, setFirstNameEdit] = useState("");
     const [lastNameEdit, setLastNameEdit] = useState("");
@@ -17,13 +19,12 @@ const Greetings = () => {
     const lastName = useSelector(
       (state: InitialState) => state.lastName
     );
-    console.log(firstName);
 
     useEffect(() => {
       setFirstNameEdit(firstName);
       setLastNameEdit(lastName);
     }, [firstName, lastName]);
-
+    
   return (
     <div className="text-white mt-8 text-center text-[32px] font-bold line-height-relaxed">
       <h1>
@@ -52,7 +53,7 @@ const Greetings = () => {
       </div>
       <div className="hidden justify-center gap-12 mb-12" id="dataManage">
         <ButtonPrimary
-          onClick={saveDataName}
+          onClick={() => dispatch(updateName({ firstName: firstNameEdit, lastName: lastNameEdit }))}
           buttonId="save"
           ButtonPrimaryContent="Save"
           className="max-w-[93px] no-underline max-h-[40px] text-sm"
