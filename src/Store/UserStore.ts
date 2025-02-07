@@ -30,13 +30,25 @@ export const userLogin = createAsyncThunk<LoginResponse, LoginFormData>(
 );
 
 export const fetchUserProfileRedux = createAsyncThunk<
-  UserProfileResponse
->("user/userFetchData", async (_token, { rejectWithValue }) => {
+  UserProfileResponse,
+  void,
+  { state: { token: string | null } }
+>("user/userFetchData", async (_, { getState, rejectWithValue }) => {
+  const token = getState().token;
+
+  if (!token) {
+    return rejectWithValue("No token found in store");
+  }
+
   try {
-    const token = localStorage.getItem("token");
-    const response = await axios.post<LoginResponse>(`/user/profile` ,{}, {
-      headers: {
-        Authorization: `Bearer ${token}`,}},
+    const response = await axios.post<UserProfileResponse>(
+      `/user/profile`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     return response.data;
   } catch (error) {
@@ -48,31 +60,3 @@ export const fetchUserProfileRedux = createAsyncThunk<
     return rejectWithValue("Une erreur est survenue");
   }
 });
-
-const fetchUserProfile = async () => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    console.error("No token found in local storage");
-    return null;
-  }
-
-  try {
-    const response = await axios.post(
-      "/user/profile",
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    localStorage.setItem("firstName", response.data.body.firstName);
-    localStorage.setItem("lastName", response.data.body.lastName);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching user profile:", error);
-    return null;
-  }
-};
-
-export default fetchUserProfile;
