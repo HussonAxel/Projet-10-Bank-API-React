@@ -4,25 +4,23 @@ import TransactionPannel from "../ui/TransactionPannel/TransactionPannel";
 import AvailableBalance from "../components/AvailableBalance/AvailableBalance";
 import { AvailableBalanceContent } from "../components/AvailableBalance/AvailableBalanceContent";
 import ButtonPrimary from "../ui/Buttons/ButtonPrimary";
-// import EditDataName from "../utils/userDataManager/EditDataName";
 import Greetings from "../components/Greetings/Greetings";
+import {handleButtonStyleOnClickEdit} from "../utils/userDataManager/EditDataName";
 
 export const Route = createFileRoute("/user")({
   component: Index,
 });
 
 function Index() {
-  // const { editDataName } = EditDataName();
-
 
   return (
     <Section className="flex-col">
-      <Greetings  />
+      <Greetings />
       <ButtonPrimary
         buttonId="editButton"
         ButtonPrimaryContent="Edit"
         className="max-w-[93px] no-underline max-h-[40px] text-sm m-auto py-3 px-3 mb-8"
-        // onClick={editDataName}
+        onClick={handleButtonStyleOnClickEdit}
       />
       {AvailableBalanceContent.map((balance, index) => (
         <TransactionPannel className="flex justify-between" key={index}>

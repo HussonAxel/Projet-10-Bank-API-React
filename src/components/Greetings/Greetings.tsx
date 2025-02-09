@@ -1,16 +1,21 @@
 import ButtonPrimary from "../../ui/Buttons/ButtonPrimary";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import EditDataName from "../../utils/userDataManager/EditDataName";
 import { InitialState } from "../../Store/Store.type";
 import { updateName } from "../../Store/actions";
 import { editUserProfileAPI } from "../../Store/UserStore";
 import { AppDispatch } from "../../Store";
 
+import {handleSaveButtonClick, handleCancelButtonClick} from "../../utils/userDataManager/EditDataName";
 
 const Greetings = () => {
 
-  // const { cancelDataName, saveDataName } = EditDataName();
+  const RevertCancelDataOnClick = () => {
+    handleCancelButtonClick();
+    setFirstNameEdit(firstName);
+    setLastNameEdit(lastName);
+  }
+
   const dispatch = useDispatch<AppDispatch>();
 
     const [firstNameEdit, setFirstNameEdit] = useState("");
@@ -56,6 +61,7 @@ const Greetings = () => {
       <div className="hidden justify-center gap-12 mb-12" id="dataManage">
         <ButtonPrimary
           onClick={() => {
+            handleSaveButtonClick();
             dispatch(
               updateName({ firstName: firstNameEdit, lastName: lastNameEdit })
             );
@@ -65,17 +71,16 @@ const Greetings = () => {
                 lastName: lastNameEdit,
               })
             );
-            // saveDataName();
           }}
-          buttonId="save"
+          buttonId="saveButton"
           ButtonPrimaryContent="Save"
           className="max-w-[93px] no-underline max-h-[40px] text-sm"
         />
         <ButtonPrimary
-          // onClick={cancelDataName}
-          buttonId="cancel"
+          buttonId="cancelButton"
           ButtonPrimaryContent="Cancel"
           className="max-w-[93px] no-underline max-h-[40px] text-sm"
+          onClick={RevertCancelDataOnClick}
         />
       </div>
     </div>
