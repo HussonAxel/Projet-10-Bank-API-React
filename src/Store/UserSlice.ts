@@ -54,7 +54,7 @@ const userSlice = createSlice({
       .addCase(updateName, (state, { payload }: PayloadAction<userData>) => {
         state.firstName = payload.firstName;
         state.lastName = payload.lastName;
-      },)
+      });
   },
 });
 

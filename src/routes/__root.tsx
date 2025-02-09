@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { revertAll } from "../Store/actions";
 import { useNavigate } from "@tanstack/react-router";
+import store from "../Store";
 
 
 export const Route = createRootRoute({
@@ -13,17 +14,35 @@ export const Route = createRootRoute({
 });
 
 function Root() {
+
   const dispatch = useDispatch();
+
+  const isConnected = useSelector(
+    (state: InitialState) => state.isConnected
+  );
+  const rememberMe = useSelector(
+    (state: InitialState) => state.rememberMe
+  );
+
   const navigate = useNavigate();
 
-  const rememberMe = useSelector((state: InitialState) => state.rememberMe);
+useEffect(() => {
+  if (isConnected && !rememberMe) {
+    console.log("resetting user 15 minutes");
+    const timeout = setTimeout(
+      () => {
+        alert("You have been disconnected due to inactivity");
+        store.dispatch(revertAll());
+      navigate({
+        to: "/sign-in",
+        replace: true,
+      });      },
+      900000
+    );
 
-  useEffect(() => {
-    if (!rememberMe) {
-      dispatch(revertAll());
-      navigate({ to: "/" });
+      return () => clearTimeout(timeout);
     }
-  }, [rememberMe, dispatch, navigate]);
+  }, [isConnected, rememberMe, dispatch, navigate]);
 
   return (
     <>
