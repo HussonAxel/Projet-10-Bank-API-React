@@ -36,6 +36,7 @@ const userSlice = createSlice({
           state.error = null;
           state.isConnected = true;
           state.token = payload.body.token;
+          state.rememberMe = payload.body.rememberMe;
         }
       )
       .addCase(userLogin.rejected, (state, action) => {

@@ -10,6 +10,7 @@ export interface LoginResponse {
     email: string;
     firstName: string;
     lastName: string;
+    rememberMe: boolean;
   };
   status: number;
   message: string;
@@ -35,8 +36,6 @@ export interface InitialState {
 
 export interface UserProfileResponse {
   body: {
-    token: string;
-    email: string;
     firstName: string;
     lastName: string;
   };

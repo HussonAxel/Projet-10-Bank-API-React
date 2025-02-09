@@ -4,7 +4,7 @@ import TransactionPannel from "../ui/TransactionPannel/TransactionPannel";
 import AvailableBalance from "../components/AvailableBalance/AvailableBalance";
 import { AvailableBalanceContent } from "../components/AvailableBalance/AvailableBalanceContent";
 import ButtonPrimary from "../ui/Buttons/ButtonPrimary";
-import EditDataName from "../utils/userDataManager/EditDataName";
+// import EditDataName from "../utils/userDataManager/EditDataName";
 import Greetings from "../components/Greetings/Greetings";
 
 export const Route = createFileRoute("/user")({
@@ -12,7 +12,7 @@ export const Route = createFileRoute("/user")({
 });
 
 function Index() {
-  const { editDataName } = EditDataName();
+  // const { editDataName } = EditDataName();
 
 
   return (
@@ -22,7 +22,7 @@ function Index() {
         buttonId="editButton"
         ButtonPrimaryContent="Edit"
         className="max-w-[93px] no-underline max-h-[40px] text-sm m-auto py-3 px-3 mb-8"
-        onClick={editDataName}
+        // onClick={editDataName}
       />
       {AvailableBalanceContent.map((balance, index) => (
         <TransactionPannel className="flex justify-between" key={index}>

@@ -1,15 +1,17 @@
 import ButtonPrimary from "../../ui/Buttons/ButtonPrimary";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import EditDataName from "../../utils/userDataManager/EditDataName";
+// import EditDataName from "../../utils/userDataManager/EditDataName";
 import { InitialState } from "../../Store/Store.type";
 import { updateName } from "../../Store/actions";
+import { editUserProfileAPI } from "../../Store/UserStore";
+import { AppDispatch } from "../../Store";
 
 
 const Greetings = () => {
 
-  const {cancelDataName } = EditDataName();
-  const dispatch = useDispatch();
+  // const { cancelDataName, saveDataName } = EditDataName();
+  const dispatch = useDispatch<AppDispatch>();
 
     const [firstNameEdit, setFirstNameEdit] = useState("");
     const [lastNameEdit, setLastNameEdit] = useState("");
@@ -53,13 +55,24 @@ const Greetings = () => {
       </div>
       <div className="hidden justify-center gap-12 mb-12" id="dataManage">
         <ButtonPrimary
-          onClick={() => dispatch(updateName({ firstName: firstNameEdit, lastName: lastNameEdit }))}
+          onClick={() => {
+            dispatch(
+              updateName({ firstName: firstNameEdit, lastName: lastNameEdit })
+            );
+            dispatch(
+              editUserProfileAPI({
+                firstName: firstNameEdit,
+                lastName: lastNameEdit,
+              })
+            );
+            // saveDataName();
+          }}
           buttonId="save"
           ButtonPrimaryContent="Save"
           className="max-w-[93px] no-underline max-h-[40px] text-sm"
         />
         <ButtonPrimary
-          onClick={cancelDataName}
+          // onClick={cancelDataName}
           buttonId="cancel"
           ButtonPrimaryContent="Cancel"
           className="max-w-[93px] no-underline max-h-[40px] text-sm"

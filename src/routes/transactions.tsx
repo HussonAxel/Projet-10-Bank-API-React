@@ -7,6 +7,9 @@ import Transactions from "../components/Transactions/Transactions";
 import { TransactionsContent } from "../components/Transactions/TransactionsContent";
 import { useEffect } from "react";
 import { useNavigate } from "@tanstack/react-router";
+import { useSelector } from "react-redux";
+import { InitialState } from "../Store/Store.type";
+
 
 export const Route = createFileRoute("/transactions")({
   component: Index,
@@ -14,15 +17,17 @@ export const Route = createFileRoute("/transactions")({
 
 function Index() {
   const navigate = useNavigate();
+  const token = useSelector((state: InitialState) => state.token);
+
 
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
+    if (!token) {
       navigate({
         to: "/sign-in",
         replace: true,
       });
     }
-  }, [navigate]);
+  });
 
   return (
     <Section className="bg-[#dfe6ed] flex flex-col">
