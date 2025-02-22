@@ -6,32 +6,30 @@ import { updateName } from "../../Store/actions";
 import { editUserProfileAPI } from "../../Store/UserStore";
 import { AppDispatch } from "../../Store";
 
-import {handleSaveButtonClick, handleCancelButtonClick} from "../../utils/userDataManager/EditDataName";
+import {
+  handleSaveButtonClick,
+  handleCancelButtonClick,
+} from "../../utils/userDataManager/EditDataName";
 
 const Greetings = () => {
-
   const RevertCancelDataOnClick = () => {
     handleCancelButtonClick();
     setFirstNameEdit(firstName);
     setLastNameEdit(lastName);
-  }
+  };
 
   const dispatch = useDispatch<AppDispatch>();
 
-    const [firstNameEdit, setFirstNameEdit] = useState("");
-    const [lastNameEdit, setLastNameEdit] = useState("");
-    const firstName = useSelector(
-      (state: InitialState) => state.firstName
-    );
-    const lastName = useSelector(
-      (state: InitialState) => state.lastName
-    );
+  const [firstNameEdit, setFirstNameEdit] = useState("");
+  const [lastNameEdit, setLastNameEdit] = useState("");
+  const firstName = useSelector((state: InitialState) => state.firstName);
+  const lastName = useSelector((state: InitialState) => state.lastName);
 
-    useEffect(() => {
-      setFirstNameEdit(firstName);
-      setLastNameEdit(lastName);
-    }, [firstName, lastName]);
-    
+  useEffect(() => {
+    setFirstNameEdit(firstName);
+    setLastNameEdit(lastName);
+  }, [firstName, lastName]);
+
   return (
     <div className="text-white mt-8 text-center text-[32px] font-bold line-height-relaxed">
       <h1>

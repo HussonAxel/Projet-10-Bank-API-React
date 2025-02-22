@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BiDownArrow, BiUpArrow } from "react-icons/bi";
+import { BiSolidChevronUp, BiSolidChevronDown } from "react-icons/bi";
 import { FaPencilAlt } from "react-icons/fa";
 import { TransactionProps } from "./Transactions.type";
 
@@ -17,20 +17,26 @@ const Transactions: React.FC<TransactionProps> = ({
   return (
     <section className="w-4/5 mx-auto border-b-2 border-gray-200">
       <div
-        className="grid grid-cols-[40px_1fr_1fr_1fr_1fr] p-4 cursor-pointer bg-white"
+        className="grid grid-cols-[40px_1fr_1fr_1fr_1fr] p-4 cursor-pointer bg-white items-center"
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <article className="flex items-center">
           {isExpanded ? (
-            <BiUpArrow className="text-gray-500" />
+            <BiSolidChevronUp size={24} className="text-gray-500" />
           ) : (
-            <BiDownArrow className="text-gray-500" />
+            <BiSolidChevronDown size={24} className="text-gray-500" />
           )}
         </article>
-        <span className="text-gray-600">{dateTransaction}</span>
-        <span>{descriptionTransaction}</span>
-        <span className="text-right">{amountTransaction}</span>
-        <span className="text-right">{balance}</span>
+        <span className="text-gray-600 flex items-center">
+          {dateTransaction}
+        </span>
+        <span className="flex items-center">{descriptionTransaction}</span>
+        <span className="text-right flex items-center justify-end">
+          {amountTransaction}
+        </span>
+        <span className="text-right flex items-center justify-end">
+          {balance}
+        </span>
       </div>
 
       {isExpanded && (

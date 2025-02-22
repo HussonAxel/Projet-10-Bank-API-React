@@ -10,7 +10,6 @@ import { useNavigate } from "@tanstack/react-router";
 import { useSelector } from "react-redux";
 import { InitialState } from "../Store/Store.type";
 
-
 export const Route = createFileRoute("/transactions")({
   component: Index,
 });
@@ -18,7 +17,6 @@ export const Route = createFileRoute("/transactions")({
 function Index() {
   const navigate = useNavigate();
   const token = useSelector((state: InitialState) => state.token);
-
 
   useEffect(() => {
     if (!token) {
@@ -31,7 +29,7 @@ function Index() {
 
   return (
     <Section className="bg-[#dfe6ed] flex flex-col">
-      <TransactionPannel className="w-full text-center max-h-[180px] border-2 border-[#c3cfd9] content-center">
+      <TransactionPannel className="w-full text-center max-h-[180px] border-2 border-[#c3cfd9] content-center justify-center">
         <AvailableBalance
           ArgentBankType={AvailableBalanceContent[0].ArgentBankType}
           ArgentBankCheckingModifier={

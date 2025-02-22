@@ -34,8 +34,8 @@ function Index() {
       <Greetings />
       <ButtonPrimary
         buttonId="editButton"
-        ButtonPrimaryContent="Edit"
-        className="max-w-[93px] no-underline max-h-[40px] text-sm m-auto py-3 px-3 mb-8"
+        ButtonPrimaryContent="Edit Name"
+        className="w-fit no-underline max-h-[40px] text-sm m-auto py-3 px-3 mb-8"
         onClick={handleButtonStyleOnClickEdit}
       />
       {AvailableBalanceContent.map((balance, index) => (
@@ -49,7 +49,7 @@ function Index() {
           <Link to="/transactions">
             <ButtonPrimary
               ButtonPrimaryContent={"View Transactions"}
-              className="max-w-[200px] no-underline max-h-[40px] cursor-default"
+              className=" max-w-full no-underline max-h-[40px] cursor-default w-full md:max-w-[200px] "
             />
           </Link>
         </TransactionPannel>

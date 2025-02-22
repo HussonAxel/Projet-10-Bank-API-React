@@ -4,7 +4,7 @@ const BannerPicture = () => {
   return (
     <>
       <div
-        className={`bg-hero-pattern relative bg-cover bg-no-repeat w-full h-[400px] bg-[0%_33%] `}
+        className={`bg-hero-pattern relative bg-cover bg-no-repeat w-full h-[300px] bg-[0%_27%] md:h-[400px]`}
       >
         <HeroContent />;
       </div>

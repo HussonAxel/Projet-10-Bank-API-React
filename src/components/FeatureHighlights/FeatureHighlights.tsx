@@ -2,11 +2,11 @@ import { FeatureHighlightsData } from "./FeatureHighlightsContent";
 
 const FeatureHighlights: React.FC = () => {
   return (
-    <section className="flex items-start">
+    <section className="flex flex-col md:flex-row items-start">
       {FeatureHighlightsData.map((feature, index) => (
         <article
           key={index}
-          className="flex flex-col flex-1 text-center p-9 items-center"
+          className="flex flex-col flex-1 text-center p-9 items-center m-auto"
         >
           <img
             src={feature.picture}

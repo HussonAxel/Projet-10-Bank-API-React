@@ -7,7 +7,7 @@ interface RememberMeProps {
 
 const RememberMe: React.FC<RememberMeProps> = ({ checked, onChange }) => {
   return (
-    <div className="remember-me-container">
+    <div>
       <input
         type="checkbox"
         id="rememberMe"
@@ -15,7 +15,9 @@ const RememberMe: React.FC<RememberMeProps> = ({ checked, onChange }) => {
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
       />
-      <label htmlFor="rememberMe">Remember me</label>
+      <label className="ml-1" htmlFor="rememberMe">
+        Remember me
+      </label>
     </div>
   );
 };
