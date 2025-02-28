@@ -21,7 +21,7 @@ function Index() {
   useEffect(() => {
     if (!token) {
       navigate({
-        to: "/sign-in",
+        to: "/login",
         replace: true,
       });
     }

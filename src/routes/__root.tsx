@@ -8,37 +8,29 @@ import { revertAll } from "../Store/actions";
 import { useNavigate } from "@tanstack/react-router";
 import store from "../Store";
 
-
 export const Route = createRootRoute({
   component: Root,
 });
 
 function Root() {
-
   const dispatch = useDispatch();
 
-  const isConnected = useSelector(
-    (state: InitialState) => state.isConnected
-  );
-  const rememberMe = useSelector(
-    (state: InitialState) => state.rememberMe
-  );
+  const isConnected = useSelector((state: InitialState) => state.isConnected);
+  const rememberMe = useSelector((state: InitialState) => state.rememberMe);
 
   const navigate = useNavigate();
 
-useEffect(() => {
-  if (isConnected && !rememberMe) {
-    console.log("resetting user 15 minutes");
-    const timeout = setTimeout(
-      () => {
+  useEffect(() => {
+    if (isConnected && !rememberMe) {
+      console.log("resetting user 15 minutes");
+      const timeout = setTimeout(() => {
         alert("You have been disconnected due to inactivity");
         store.dispatch(revertAll());
-      navigate({
-        to: "/sign-in",
-        replace: true,
-      });      },
-      900000
-    );
+        navigate({
+          to: "/login",
+          replace: true,
+        });
+      }, 900000);
 
       return () => clearTimeout(timeout);
     }

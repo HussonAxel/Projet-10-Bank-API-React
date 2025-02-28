@@ -11,18 +11,12 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as UserImport } from './routes/user'
 import { Route as TransactionsImport } from './routes/transactions'
-import { Route as SignInImport } from './routes/sign-in'
+import { Route as ProfileImport } from './routes/profile'
+import { Route as LoginImport } from './routes/login'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
-
-const UserRoute = UserImport.update({
-  id: '/user',
-  path: '/user',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const TransactionsRoute = TransactionsImport.update({
   id: '/transactions',
@@ -30,9 +24,15 @@ const TransactionsRoute = TransactionsImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const SignInRoute = SignInImport.update({
-  id: '/sign-in',
-  path: '/sign-in',
+const ProfileRoute = ProfileImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LoginRoute = LoginImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -53,11 +53,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/sign-in': {
-      id: '/sign-in'
-      path: '/sign-in'
-      fullPath: '/sign-in'
-      preLoaderRoute: typeof SignInImport
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileImport
       parentRoute: typeof rootRoute
     }
     '/transactions': {
@@ -67,13 +74,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TransactionsImport
       parentRoute: typeof rootRoute
     }
-    '/user': {
-      id: '/user'
-      path: '/user'
-      fullPath: '/user'
-      preLoaderRoute: typeof UserImport
-      parentRoute: typeof rootRoute
-    }
   }
 }
 
@@ -81,47 +81,47 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/sign-in': typeof SignInRoute
+  '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
   '/transactions': typeof TransactionsRoute
-  '/user': typeof UserRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/sign-in': typeof SignInRoute
+  '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
   '/transactions': typeof TransactionsRoute
-  '/user': typeof UserRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/sign-in': typeof SignInRoute
+  '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
   '/transactions': typeof TransactionsRoute
-  '/user': typeof UserRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sign-in' | '/transactions' | '/user'
+  fullPaths: '/' | '/login' | '/profile' | '/transactions'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sign-in' | '/transactions' | '/user'
-  id: '__root__' | '/' | '/sign-in' | '/transactions' | '/user'
+  to: '/' | '/login' | '/profile' | '/transactions'
+  id: '__root__' | '/' | '/login' | '/profile' | '/transactions'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  SignInRoute: typeof SignInRoute
+  LoginRoute: typeof LoginRoute
+  ProfileRoute: typeof ProfileRoute
   TransactionsRoute: typeof TransactionsRoute
-  UserRoute: typeof UserRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  SignInRoute: SignInRoute,
+  LoginRoute: LoginRoute,
+  ProfileRoute: ProfileRoute,
   TransactionsRoute: TransactionsRoute,
-  UserRoute: UserRoute,
 }
 
 export const routeTree = rootRoute
@@ -135,22 +135,22 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/sign-in",
-        "/transactions",
-        "/user"
+        "/login",
+        "/profile",
+        "/transactions"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/sign-in": {
-      "filePath": "sign-in.tsx"
+    "/login": {
+      "filePath": "login.tsx"
+    },
+    "/profile": {
+      "filePath": "profile.tsx"
     },
     "/transactions": {
       "filePath": "transactions.tsx"
-    },
-    "/user": {
-      "filePath": "user.tsx"
     }
   }
 }

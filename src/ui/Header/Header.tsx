@@ -5,8 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { InitialState } from "../../Store/Store.type";
 import { revertAll } from "../../Store/actions";
 
-
-
 const Header = () => {
   const token = useSelector((state: InitialState) => state.token);
   const firstName = useSelector((state: InitialState) => state.firstName);
@@ -22,13 +20,13 @@ const Header = () => {
         />
       </Link>
       <div className="flex flex-row items-center text-[#2c3e50] gap-2">
-        <Link to="/user" className="font-bold hover:underline">
+        <Link to="/profile" className="font-bold hover:underline">
           <FaUserCircle />
         </Link>
         {token ? (
           <>
             <Link
-              to="/user"
+              to="/profile"
               className="font-bold text-[#2c3e50] hover:underline"
             >
               {firstName}
@@ -44,7 +42,7 @@ const Header = () => {
           </>
         ) : (
           <Link
-            to="/sign-in"
+            to="/login"
             className="font-bold text-[#2c3e50] hover:underline"
           >
             Sign In

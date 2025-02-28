@@ -4,7 +4,7 @@ import { FaUserCircle } from "react-icons/fa";
 import ButtonPrimary from "../../ui/Buttons/ButtonPrimary";
 import { useDispatch, useSelector } from "react-redux";
 import { UserState, LoginResponse } from "../../Store/Store.type";
-import {userLogin} from "../../Store/UserStore";
+import { userLogin } from "../../Store/UserStore";
 import { useState } from "react";
 import RememberMe from "./RememberMe";
 import { useNavigate } from "@tanstack/react-router";
@@ -51,9 +51,8 @@ const SignIn = () => {
           rememberMe: false,
         });
         dispatch(fetchUserProfileRedux());
-        navigate({ to: "/user" });
+        navigate({ to: "/profile" });
       } else {
-
         setErrorMessage(
           result.payload && (result.payload as LoginResponse).message
             ? (result.payload as LoginResponse).message
@@ -86,7 +85,7 @@ const SignIn = () => {
           onChange={handleRememberMeChange}
         />
         <ButtonPrimary
-          ButtonPrimaryContent={loading ? "Signing in..." : "Sign-in"}
+          ButtonPrimaryContent={loading ? "Signing in..." : "login"}
         />
 
         {errorMessage && (

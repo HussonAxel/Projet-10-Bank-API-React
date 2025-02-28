@@ -8,19 +8,17 @@ import {
 import axios, { AxiosError } from "axios";
 import { RootState } from "../Store/index";
 
-
 axios.defaults.baseURL = "http://localhost:3001/api/v1";
-
 
 export const userLogin = createAsyncThunk<LoginResponse, LoginFormData>(
   "user/userLogin",
   async (formData, { rejectWithValue }) => {
     try {
-      const response = await axios.post<LoginResponse>(
-        `/user/login`,
-        formData
-      );
-      return {...response.data, body: {...response.data.body, rememberMe: formData.rememberMe}};
+      const response = await axios.post<LoginResponse>(`/user/login`, formData);
+      return {
+        ...response.data,
+        body: { ...response.data.body, rememberMe: formData.rememberMe },
+      };
     } catch (error) {
       if (error instanceof Error) {
         return rejectWithValue(
